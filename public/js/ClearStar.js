@@ -7,9 +7,11 @@ class ClearStar extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
+  // When star is clicked, send id to parent component function onClick
   onClick(e) {
-    // console.log('inside onclick',props)
-    this.props.onClick(this.props.id);
+    let [id] = this.props.className.match(/\d$/);
+    id = parseInt(id);
+    this.props.onClick(id);
   }
 
   render() {

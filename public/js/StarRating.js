@@ -1,5 +1,11 @@
 const React = require('react');
 
+const Counter = require('../../utilities/Counter')
+
+const myCounter = new Counter();
+
+const generateKey = myCounter.generateKey.bind(myCounter);
+
 const ShadedStar = require('./ShadedStar');
 
 const ClearStar = require('./ClearStar');
@@ -17,67 +23,55 @@ class StarRating extends React.Component {
 
   onClick(rating) {
     if (rating !== this.state.rating) {
-      console.log('HEYYYY');
       this.setState({ rating: rating });
     }
   }
 
+  pushStarComponent(componentArray, StarComponent) {
+    generateKey().then((key) => {
+      keyPlus = `star-${key}`;
+      componentArray.push(<StarComponent className={`star-${componentArray.length + 1}`} onClick={this.onClick} key={key} />);
+      return componentArray;
+    });
+  }
+
   render() {
-    let StarsArray = [];
+
+    let starsArray = [];
+    // Add shaded stars correlated to rating
     for (let i = 0; i < this.state.rating; i++) {
-      StarsArray.push(<ShadedStar id={i + 1} onClick={this.onClick} />);
+      // this.pushStarComponent(starsArray, ShadedStar);
+      // Generate a random key
+      generateKey()
+        .then((keyString) => {
+          const key = `star-${keyString}`;
+          StarsArray.push(<ShadedStar className={`star-${i + 1}`} onClick={this.onClick} key={key} />);
+        })
+        .catch((err) => {
+          throw new Error('Problem with key-generator');
+        });
+      // Add new star component to the array
     }
-    while (StarsArray.length < 5) {
-      StarsArray.push(<ClearStar id={StarsArray.length + 1} onClick={this.onClick} />);
+    // If rating < 5, fill with unshaded stars
+    while (starsArray.length < 5) {
+      // this.pushStarComponent(starsArray, ClearStar);
+      const key = generateKey()
+        .then((keyString) => {
+          const key = `star-${keyString}`;
+          StarsArray.push(<ClearStar className={`star-${StarsArray.length + 1}`} onClick={this.onClick} key={key} />);
+        })
+        .catch((err) => {
+          throw new Error('Problem with key-generator');
+        });
+
     }
 
     return (
       <div>
-        <p>{StarsArray}</p>
+        <p>{starsArray}</p>
       </div>
     );
   }
 }
-
-//class ClearStar extends React.Component {
-//  constructor(props) {
-//    super(props);
-//  }
-//
-//  onClick(e) {
-//    this.props.onClick(this.props.id);
-//  }
-//
-//  render() {
-//    return (
-//      <span
-//        onClick={this.onClick}
-//      >
-//        ☆
-//      </span>
-//    );
-//  }
-//}
-
-// class ShadedStar extends React.Component {
-//   constructor(props) {
-//     super(props);
-//   }
-// 
-//   onClick(e) {
-//     this.props.onClick(this.props.id);
-//   }
-// 
-//   render() {
-//     return (
-//       <span
-//         onClick={this.onClick}
-//       >
-//         ★
-//       </span>
-//     );
-//   }
-// }
-
 
 module.exports = StarRating;
