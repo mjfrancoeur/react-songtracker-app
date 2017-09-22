@@ -1,11 +1,15 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
 const style = require('../css/app.css');
+const StarRating = require('./StarRating');
 
 const App = React.createClass({
   render: function () {
     return (
-      <h1>Hello world</h1>
+      <div>
+        <h1>Hello world</h1>
+        <StarRating />
+      </div>
     );
   }
 })

@@ -1,4 +1,2 @@
-require('./greeting');
-require('./button');
-require('./coolerGreeting');
-require('./todoForm');
+// require('./greeting');
+require('./starrating');
