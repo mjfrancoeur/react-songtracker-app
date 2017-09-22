@@ -1,7 +1,6 @@
 const React = require('react');
 const StarRating = require('./StarRating');
 
-
 class Song extends React.Component {
   constructor(props) {
     super(props);
