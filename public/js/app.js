@@ -3,15 +3,44 @@ const ReactDOM = require('react-dom');
 const style = require('../css/app.css');
 const StarRating = require('./StarRating');
 
+const Counter = require('./../../utilities/Counter');
+const myCounter = new Counter();
+
 const SongList = require('./SongList');
+const SongInput = require('./SongInput');
 
 class App extends React.Component {
   constructor() {
     super();
 
     this.state = {
-      songs = [];
+      songs: [],
     }
+
+    this.addSong = this.addSong.bind(this);
+    this.deleteComponent = this.deleteComponent.bind(this);
+  }
+
+  addSong(song) {
+    song.key = myCounter.generateKey();
+    this.setState((prevState) => {
+      console.dir(song);
+      return {
+        songs: prevState.songs.concat(song),
+      };
+    });
+  }
+
+  deleteComponent(key) {
+    this.setState((prevState) => {
+      const remaining = prevState.songs.filter((song) => {
+        return song.key !== key;
+      });
+      console.log(remaining);
+      return {
+        songs: remaining
+      }
+    });
   }
 
   //TODO: write DeleteComponent and AddComponent
@@ -19,6 +48,7 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        <SongInput onSubmit={this.addSong}/>
         <SongList songs={this.state.songs}
           deleteComponent={this.deleteComponent}
         />
@@ -36,3 +66,5 @@ window.onload = function () {
     storyApp
   );
 }
+
+module.exports = App;

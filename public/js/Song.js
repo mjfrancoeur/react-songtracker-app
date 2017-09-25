@@ -11,13 +11,13 @@ class Song extends React.Component {
     this.onClick = this.onClick.bind(this);
   }
 
-  onClick() {
-    this.props.deleteComponent(this.props.key);
+  onClick(e) {
+    this.props.deleteComponent(this.props.songKey);
   }
 
   render() {
     return (
-      <div class='song-row row'>
+      <div className='song-row row'>
         <span className='col-xs-3'>{this.props.title}</span>
         <span className='col-xs-3'>{this.props.artist}</span>
         <span className='col-xs-3'><StarRating rating={this.props.rating}/></span>

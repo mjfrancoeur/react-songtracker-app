@@ -1,4 +1,3 @@
-
 class Counter {
   constructor() {
     this.count = 1;
