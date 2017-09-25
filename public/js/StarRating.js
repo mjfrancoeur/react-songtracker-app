@@ -58,9 +58,7 @@ class StarRating extends React.Component {
     }
 
     return (
-      <div>
-        <p>{starsArray}</p>
-      </div>
+      <span>{starsArray}</span>
     );
   }
 }
